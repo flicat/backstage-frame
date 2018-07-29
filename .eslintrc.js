@@ -41,7 +41,7 @@ module.exports = {
         'space-in-parens': ["error", "never"],           // 强制在圆括号内使用一致的空格
         'template-tag-spacing': ["error", "always"],     // 要求在模板标记和它们的字面量之间有空格
         'key-spacing': ["error", { "beforeColon": false }],    // 不强制在对象字面量的属性中键和值之间使用一致的间距
-        'indent': ['error', 2],                                 // 强制使用一致的缩进
+        'indent': 'off',                                  // 强制使用一致的缩进
         'semi': ['error', 'always', {'omitLastInOneLineBlock': true}],       // 要求使用分号
         'no-trailing-spaces': ['error', {'skipBlankLines': true}],         // 禁用行尾空格
         // allow debugger during development
