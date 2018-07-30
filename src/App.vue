@@ -8,11 +8,16 @@
 <script>
   import API from '@/api';
 
-  console.log(API.billPageList({_: 'test'}));
-  console.log(API.billPageList.get({_: 'get'}));
-  console.log(API.billPageList.post({_: 'post'}));
-  console.log(API.billPageList.header({_: 'header'}));
-  console.log(API.billPageList.url('url', 123));
+  let data = new FormData();
+  data.append('name', 123);
+  data.append('value', 456);
+
+  API.billPageList({_: 'test'}).then(data => console.dir(data));
+  API.billPageList.get({_: 'get'}).then(data => console.dir(data));
+  API.billPageList.get(123).then(data => console.dir(data));
+  API.billPageList.get(['info', 456]).then(data => console.dir(data));
+  API.billPageList.post({_: 'post'}).then(data => console.dir(data));
+  API.billPageList.post(data, {type: 'blob', headers: {'Content-Type': 'image/*'}}).then(data => console.dir(data));
 
   export default {
     name: 'App'

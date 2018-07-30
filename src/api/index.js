@@ -7,50 +7,30 @@
 import url from './url';
 import request from './request';
 
+let api = {};
+
 Object.keys(url).forEach(name => {
-  let defaultParam = {
-    url: url[name],
-    headers: {
-      token: sessionStorage.token
-    }
-  };
 
-  let res = function (params) {
+  let res = function (data, params = {}) {
+    params.url = url[name];
     // 默认 post 请求
-    return request({
-      url: defaultParam.url,
-      method: 'post',
-      data: params,
-      headers: defaultParam.headers
-    });
+    params.method = 'post';
+    params.data = data;
+    return request(params);
   };
 
-  url[name] = new Proxy(res, {
+  api[name] = new Proxy(res, {
     get: function (target, key, receiver) {
       if (key === 'post') {
         // post 请求
         return res;
       } else if (key === 'get') {
         // get 请求
-        return function (params) {
-          return request({
-            url: defaultParam.url,
-            method: 'get',
-            data: params,
-            headers: defaultParam.headers
-          });
-        };
-      } else if (key === 'header') {
-        // 设置请求头
-        return function (header) {
-          Object.assign(defaultParam.headers, header);
-          return target;
-        };
-      } else if (key === 'url') {
-        // 设置请求 url
-        return function (...args) {
-          defaultParam.url = [defaultParam.url, ...args].join('/');
-          return target;
+        return function (data, params = {}) {
+          params.url = url[name];
+          params.method = 'get';
+          params.data = data;
+          return request(params);
         };
       } else {
         return Reflect.get(target, key, receiver);
@@ -63,17 +43,4 @@ Object.keys(url).forEach(name => {
   });
 });
 
-// let api = new Proxy({}, {
-//   get: function (target, key, receiver) {
-//     if (url[key]) {
-//       return Reflect.get(url, key, receiver);
-//     } else {
-//       return Reflect.get(target, key, receiver);
-//     }
-//   },
-//   set: function (target, key, value, receiver) {
-//     throw new Error(`can not set ${key}`);
-//   }
-// });
-
-export default url;
+export default api;
