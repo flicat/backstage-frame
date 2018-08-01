@@ -43,8 +43,9 @@ module.exports = {
         'key-spacing': ["error", { "beforeColon": false }],    // 不强制在对象字面量的属性中键和值之间使用一致的间距
         'indent': 'off',                                  // 强制使用一致的缩进
         'padded-blocks': 'off',                               // 强制使用一致的缩进
+        'space-before-function-paren': 'off',                               // 强制使用一致的缩进
         'semi': ['error', 'always', {'omitLastInOneLineBlock': true}],       // 要求使用分号
-        'no-trailing-spaces': ['error', {'skipBlankLines': true}],         // 禁用行尾空格
+        'no-trailing-spaces': 'off',         // 禁用行尾空格
         // allow debugger during development
         'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'         // 禁用 debugger
     }

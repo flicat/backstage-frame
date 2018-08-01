@@ -1,7 +1,7 @@
 /*!
  * @author liyuelong1020@gmail.com
  * @date 2018/7/17 017
- * @description Description
+ * @description 全局配置
  */
 
 let SITE_CONFIG;
