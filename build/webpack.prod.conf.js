@@ -123,15 +123,6 @@ const webpackConfig = merge(baseWebpackConfig, {
   ]
 })
 
-// dev环境下显示包分析工具
-if (process.env.NODE_ENV === 'localhost') {
-  const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-
-  webpackConfig.plugins.push(
-    new BundleAnalyzerPlugin()
-  )
-}
-
 if (config.build.productionGzip) {
   const CompressionWebpackPlugin = require('compression-webpack-plugin')
 

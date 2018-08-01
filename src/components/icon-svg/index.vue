@@ -15,10 +15,10 @@
     },
     computed: {
       getName () {
-        return `#icon-${this.name}`
+        return `#${this.name}`;
       }
     }
-  }
+  };
 </script>
 
 <style>
