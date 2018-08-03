@@ -17,7 +17,7 @@ import SITE_CONFIG from '@/config';
 * */
 export default function ({url, method = 'post', data, headers, type = 'json'}) {
   // 请求地址
-  let requestUrl = SITE_CONFIG.baseUrl + url;
+  let requestUrl = [SITE_CONFIG.baseUrl.replace(/\/$/, ''), url.replace(/^\//, '')].join('/');
 
   // fetch配置信息
   let param = {
@@ -43,7 +43,7 @@ export default function ({url, method = 'post', data, headers, type = 'json'}) {
     } else {
 
       // 字符串拼接
-      requestUrl = [requestUrl, data].join(/\/$/.test(requestUrl) ? '' : '/');
+      requestUrl = [requestUrl.replace(/\/$/, ''), data.replace(/^\//, '')].join('/');
     }
   } else if (Object.prototype.toString.call(data)) {
 
@@ -56,7 +56,7 @@ export default function ({url, method = 'post', data, headers, type = 'json'}) {
 
   return fetch(requestUrl, param).then(res => {
     // 根据请求类型返回数据
-    if (res[type]) {
+    if (typeof res[type] === 'function') {
       return res[type]();
     } else {
       // 默认返回json

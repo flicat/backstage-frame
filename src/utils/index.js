@@ -178,3 +178,40 @@ export function forEachIn(obj, callback) {
     }
   }
 }
+
+export function getTimeString (date, format) {
+  date = new Date(date);
+
+  if (date.toString() === 'Invalid Date') {
+    return '';
+  }
+
+  let weekName = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+  let timeStr = String(date.getHours()).padStart(2, '0') + ':' + String(date.getMinutes()).padStart(2, '0');
+
+  let now = new Date();
+
+  if (now - date <= 86400000 && now.getDate() === date.getDate()) {
+    if (now - date <= 3600000) {
+      return Math.floor((now - date) / 60000) + '分钟前';
+    } else {
+      return Math.floor((now - date) / 3600000) + '小时前';
+    }
+  } else {
+    now.setHours(0, 0, 0, 0);
+    date.setHours(0, 0, 0, 0);
+    let diffDay = (now - date) / 86400000;
+
+    if (diffDay === 1) {
+      return '昨天 ' + timeStr;
+    } else if (diffDay <= 3) {
+      return diffDay + '天前';
+    } else if (diffDay < 7 && date.getDay() > 0 && date.getDay() < now.getDay()) {
+      return weekName[date.getDay()] + ' ' + timeStr;
+    } else if (now.getFullYear() === date.getFullYear()) {
+      return (Number(date.getMonth()) + 1) + '月' + date.getDate() + '日 ' + timeStr;
+    } else {
+      return now.getFullYear() - date.getFullYear() + '年前';
+    }
+  }
+}
